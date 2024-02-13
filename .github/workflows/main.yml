@@ -24,21 +24,16 @@ jobs:
       - name: Build JAR with Maven
         run: mvn package
         
-      - name: Log into registry ${{ secrets.ACR_REGISTRY }}
-        if: github.event_name != 'pull_request'
-        uses: azure/docker-login@v1
+      - name: Login to Azure
+        uses: azure/login@v1
         with:
-          login-server: ${{ secrets.ACR_REGISTRY }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - name: Build Docker image
+        run: docker build -t my-app .
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-        
-      - name: Build and Push Docker Image
-        env:
-          DOCKER_BUILDKIT: 1
-        run: |
-          IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)
-          docker buildx build --progress=plain --tag my-docker-image:$IMAGE_TAG --file Dockerfile --output type=docker .
-          docker push my-docker-image:$IMAGE_TAG
+      - name: Tag Docker image
+        run: docker tag discovery-service:latest acrbootcamp49.azurecr.io/discovery-service:latest
+
+      - name: Push Docker image to ACR
+        run: docker push acrbootcamp49.azurecr.io/discovery-service:latest
