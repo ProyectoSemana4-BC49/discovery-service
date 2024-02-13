@@ -35,5 +35,6 @@ jobs:
       - name: Tag Docker image
         run: docker tag discovery-service:latest acrbootcamp49.azurecr.io/discovery-service:latest
 
+
       - name: Push Docker image to ACR
         run: docker push acrbootcamp49.azurecr.io/discovery-service:latest
