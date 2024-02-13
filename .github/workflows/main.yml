@@ -30,9 +30,9 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           
       - name: Build Docker image
-        run: docker build -t my-app .
+        run: docker build -t discovery-service .
 
-      - name: Tag Docker image
+      - name: push docker image
         run: docker tag discovery-service:latest acrbootcamp49.azurecr.io/discovery-service:latest
 
 
