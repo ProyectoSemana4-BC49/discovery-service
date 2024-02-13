@@ -24,15 +24,16 @@ jobs:
       - name: Build JAR with Maven
         run: mvn package
         
-      - name: Login to Azure
-        uses: azure/login@v1
+      - uses: azure/docker-login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          login-server: acrbootcamp49.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
           
       - name: Build Docker image
         run: docker build -t discovery-service .
 
-      - name: push docker image
+      - name: tag docker image
         run: docker tag discovery-service:latest acrbootcamp49.azurecr.io/discovery-service:latest
 
 
