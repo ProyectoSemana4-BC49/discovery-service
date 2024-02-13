@@ -40,6 +40,5 @@ jobs:
           DOCKER_BUILDKIT: 1
         run: |
           IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)
-          echo ${{ secrets.ACR_PASSWORD }} | docker login acrbootcamp49.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password-stdin
-          docker buildx build --progress=plain --tag <acr-registry-url>/<acr-repository-name>:$IMAGE_TAG --file Dockerfile --output type=docker .
-          docker push acrbootcamp49.azurecr.io/<acr-repository-name>:$IMAGE_TAG
+          docker buildx build --progress=plain --tag my-docker-image:$IMAGE_TAG --file Dockerfile --output type=docker .
+          docker push my-docker-image:$IMAGE_TAG
