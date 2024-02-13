@@ -48,6 +48,7 @@
 
 
 	<build>
+		<finalName>discovery_service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
