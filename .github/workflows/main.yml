@@ -32,5 +32,5 @@ jobs:
           DOCKER_BUILDKIT: 1
         run: |
           IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)
-          docker buildx build --progress=plain --tag my-docker-image:$IMAGE_TAG --file Dockerfile .
+          docker buildx build --progress=plain --tag my-docker-image:$IMAGE_TAG --file Dockerfile --output type=docker .
           docker push my-docker-image:$IMAGE_TAG
